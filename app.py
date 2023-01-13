@@ -63,14 +63,9 @@ class DCPCreator(tk.Frame):
 
         self.notebook = ttk.Notebook(self.master)
         self.notebook.pack(expand=True, fill='both')
-        #self.notebook.grid()
 
-        # tab_one = tk.Frame(notebook)
         page = {
-            # 'summary': DCPSummary(self.features),
             'sensors': DCPSensorSelection(self.notebook, self.features),
-            # 'recipe': DCPStepValueSetting(self.features),
-            # 'stats': DCPStats(self.features),
         }
 
         self.notebook.add(page['sensors'], text='Selection', underline=0)
@@ -90,6 +85,7 @@ class DCPCreator(tk.Frame):
         )
         if len(filename) == 0:
             return
+
         self.opendir = os.path.dirname(filename)
         self.reader = ReadCSV(filename)
         self.features = self.reader.read()
