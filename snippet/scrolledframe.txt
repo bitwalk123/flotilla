@@ -1,0 +1,78 @@
+  root = tkinter.Tk() #メインウィンドウ生成
+  : 
+  :
+  #メインフレーム生成
+  mainFrame = tkinter.Frame(root, ...)
+  mainFrame.pack()
+  #Frame1を生成
+  frame1 = tkinter.Frame(mainFrame, ...)
+  frame1.pack()
+  #Frame2を生成
+  frame2 = tkinter.Frame(mainFrame, ...)
+  frame2.pack()
+  
+  # Canvas生成
+  canvas=tkinter.Canvas(frame2, ...)
+
+  # 垂直・水平方向のスクロールバー生成
+  hbar=Scrollbar(frame2,orient=tkinter.HORIZONTAL)
+  hbar.pack(side=tkinter.BOTTOM,fill=tkinter.X)
+  hbar.config(command=canvas.xview)
+  
+  vbar=Scrollbar(frame2,orient=tkinter.VERTICAL)
+  vbar.pack(side=tkinter.RIGHT,fill=tkinter.Y)
+  vbar.config(command=canvas.yview)
+  :
+  :
+  # チェックボックス生成 (Nはチェックボックスの個数)
+  for i in range(0, N):
+    :
+    :
+    chk = tkinter.Checkbutton(frame2, ...)
+    :
+
+  # canvasとスクロールバー対応
+  canvas.config(xscrollcommand=hbar.set, yscrollcommand=vbar.set)
+  canvas.pack()
+  
+  
+  
+
+
+
+
+
+import tkinter as tk
+
+root = tk.Tk()
+canvas = tk.Canvas(root, width=400, height=400)
+frame = tk.Frame(canvas)
+
+for row in range(40):
+	for column in range(20):
+		text = "({}, {})".format(row, column)
+		chk = tk.Checkbutton(frame, text=text)
+		chk.grid(row=row, column=column)
+
+# スクロールバーの配置
+hbar = tk.Scrollbar(root, orient=tk.HORIZONTAL)
+hbar.config(command=canvas.xview)
+hbar.pack(side=tk.BOTTOM, fill=tk.X)
+vbar = tk.Scrollbar(root, orient=tk.VERTICAL)
+vbar.config(command=canvas.yview)
+vbar.pack(side=tk.RIGHT,fill=tk.Y)
+
+canvas.create_window(0, 0, window=frame)
+canvas.pack(fill=tk.BOTH, expand=True)
+canvas.update_idletasks()
+
+canvas.config(
+	scrollregion=canvas.bbox("all"),
+	xscrollcommand=hbar.set,
+	yscrollcommand=vbar.set)
+# スクロールバー位置のリセット
+canvas.xview_moveto(0)
+canvas.yview_moveto(0)
+
+print(canvas.bbox("all"))
+root.mainloop()
